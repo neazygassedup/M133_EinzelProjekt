@@ -1,0 +1,75 @@
+<%- await include('views/header.ejs', { title: 'Home' }) %>
+<%- await include('views/head.ejs') %>
+
+<div class="container-fluid">
+
+    <h1>Warenkorb</h1>
+
+    <table class="table table-bordered">
+        <thead class="bg-warning">
+            <tr>
+                <th>Produkt</th>
+                <th>Einzelpreis</th>
+                <th>Anzahl</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let total = 0; %>
+            <% if(cart != undefined) { %>
+            <% cart.forEach(product => {  %>
+
+            <tr>
+                <td><a href="/product/<%= product.id %>"><%= product.productName %></a></td>
+                <td><%= product.unitPrice.toFixed(2) %></td>
+                <td>
+                    <button onclick="removeFromCart(`<%= product.id %>`)" class="btn btn-danger"><i class="fas fa-minus"></i></button>
+                    <%= product.amount %>
+                    <button onclick="addToCart(`<%= product.id %>`)" class="btn btn-danger"><i class="fas fa-plus"></i></button>
+                </td>
+                <td><%= product.total.toFixed(2) %></td>
+            </tr>
+
+            <%  %>
+
+            <%         let subTotal = product.unitPrice * product.amount;
+            total += subTotal; }); %>
+            <% } %>
+        </tbody>
+    </table>
+
+    <% if(cart != undefined && cart.length > 0) { %>
+    <p><%= total.toFixed(2) %></p>
+    <a href="/checkout"><button class="btn btn-outline-primary">Checkout</button></a>
+    <% } %>
+
+    <% if(cart == undefined || cart.length == 0) { %>
+        <h2>Ihr Warenkorb ist leer</h2>
+        <a href="/">Einkauf fortsetzen</a>
+    <% } %>
+
+
+</div>
+
+<script>
+        async function addToCart(id) {
+        await fetch(`/cart/add/${id}`,
+        {
+            method: "POST"
+        }
+        );
+        location.reload();
+    }
+
+    async function removeFromCart(id) {
+        await fetch(`/cart/remove/${id}`,
+        {
+            method: "POST"
+        }
+        );
+        location.reload();
+    }
+</script>
+
+
+<%- await include('views/footer.ejs') %>

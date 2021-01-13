@@ -1,0 +1,22 @@
+<nav class="navbar">
+<h1>BBZW Dorfladen</h1>
+</nav>
+
+<script>
+
+   
+
+    async function getCartTotal() {
+        let res = await fetch("/cart/total");
+        // console.log(res.json());
+        let cart = await res.json();
+
+        var icon = document.querySelector("#miniCart");
+        icon.innerHTML = "";
+        icon.innerHTML = cart.toFixed(2);
+    }
+    getCartTotal();
+</script>
+
+<!-- <span onclick="getCartTotal()">Click me</span> -->
+<button class="btn btn-primary"><a href="/Cart" class="text-white"><i class="fas fa-shopping-cart text-white" ></i> <span id="miniCart"></span></a></button>

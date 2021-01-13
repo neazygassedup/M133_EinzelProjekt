@@ -1,0 +1,26 @@
+<%- await include('views/header.ejs', { title: 'Home' }) %>
+<%- await include('views/head.ejs') %>
+
+<h2>Produkte</h2>
+<div class="container-fluid">
+  <div class="col-md-12">
+    <div class="row">
+      <% products.forEach(product => { %>
+      <div class="card" style="width: 350px; border: none;">
+        <div class="card-body">
+          <a href="/product/<%= product.id %>">
+
+            <img style="height: 200px; width: 200px" src="/img/<%= product.imageName %>">
+            <p><%= product.productName %></p>
+          </a>
+          <p>CHF <%= product.specialOffer.toFixed(2) %> <del>CHF <%= product.normalPrice.toFixed(2) %></del></p>
+        </div>
+      </div>
+      <% });%>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<%- await include('views/footer.ejs') %>

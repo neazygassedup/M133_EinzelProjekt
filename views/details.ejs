@@ -1,0 +1,32 @@
+<%- await include('views/header.ejs', { title: 'Home' }) %>
+<%- await include('views/head.ejs') %>
+
+<script>
+    async function addToCart(id) {
+        await fetch(`/cart/add/${id}`,
+            {
+                method: "POST"
+            }
+        );
+        location.reload();
+    }
+</script>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="/img/<%= product.imageName %>" height="150px" alt="">
+        </div>
+
+        <div class="col-md-4">
+            <h1><%= product.productName %></h1>
+
+            <p><%= product.description %></p>
+
+            <button class="btn btn-outline-danger" onclick="addToCart(`<%= product.id %>`)">Zum Warenkorb hinzufügen</button>
+        </div>
+    </div>
+</div>
+
+<%- await include('views/footer.ejs') %>

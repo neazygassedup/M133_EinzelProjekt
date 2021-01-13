@@ -1,0 +1,70 @@
+<%- await include('views/header.ejs', { title: 'Home' }) %>
+<%- await include('views/head.ejs') %>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <form action="/Checkout" method="post" onsubmit="checkOut()">
+                <div class="form-group">
+                    <label class="control-label">Vorname</label>
+                    <input type="text" required class="form-control" id="firstName">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Nachname</label>
+                    <input type="text" required class="form-control" id="lastName">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">E-Mail</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary">Einkauf abschliessen</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function checkOut() {
+        /*
+    let firstName = document.getElementById("firstName").innerText;
+    let lastName = document.getElementById("lastName").innerText;
+    let email = document.getElementById("email").innerText;
+    */
+
+    // console.log(document.querySelector("#email"));
+
+    const data = {
+        firstName: document.querySelector("#firstName").value,
+        lastName: document.querySelector("#lastName").value,
+        email: document.querySelector("#email").value
+    }
+
+    await fetch(
+        "/checkout",
+        {
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            method: "POST"
+        }
+    );
+}
+    /*
+    checkOut();
+    function checkOut() {
+    let firstName = document.getElementById("firstName").innerText;
+    let lastName = document.getElementById("lastName").innerText;
+    let email = document.getElementById("email").innerText;
+
+    console.log(document.querySelector("input").value);
+
+    console.log(document.querySelector("#firstName").value);
+}
+*/
+</script>
+
+<%- await include('views/footer.ejs') %>
